@@ -4,7 +4,7 @@
 
 Dalam era digital yang terus berkembang, industri hiburan seperti film dan televisi telah mengalami perubahan besar dalam cara konsumen menemukan dan mengakses konten. Platform streaming dan database film online telah menjadi sangat populer, menyediakan akses tak terbatas ke ribuan judul film dari berbagai genre dan tahun rilis. Namun, dengan banyaknya pilihan film yang tersedia, mencari tontonan yang sesuai dengan preferensi dan minat pengguna dapat menjadi tugas yang menantang.
 
-Inilah di mana sistem rekomendasi film berbasis machine learning menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film.
+Inilah di mana sistem rekomendasi film berbasis machine learning menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film. [1]
 
 Sebagai contoh, platform streaming terkemuka seperti Netflix, Amazon Prime Video, atau Disney+ menggunakan sistem rekomendasi untuk memberikan pengalaman pengguna yang disesuaikan dan meningkatkan retensi pelanggan. Sistem ini memanfaatkan teknologi machine learning dan algoritma yang kompleks untuk menganalisis data historis pengguna, seperti riwayat penontonannya, peringkat film yang telah ditonton, durasi menonton, dan interaksi dengan platform lainnya.
 
@@ -12,26 +12,46 @@ Sebagai contoh, platform streaming terkemuka seperti Netflix, Amazon Prime Video
 
 ### Problem Statements
 
-Bagaimana cara menentukan berita tersebut adalah berita yang sah atau berita yang *hoax* kepada pengguna?
+Bagaimana cara memberikan rekomendasi film-film yang dapat disukai pengguna berdasarkan film yang telah ditonton sebelumnya?
 
 ### Goals
 
-Pengguna dapat mengetahui berita yang berjudul A dan isi berita A' termasuk ke dalam berita sah atau *hoax*, dengan menggunakan model *machine learning* dan *dataset* yang sesuai.
+Pengguna mendapatkan sejumlah rekomendasi film berdasarkan film yang telah ditonton sebelumnya.
 
 ### Solution statements
 
-Membuat *deep learning model* dengan menggunakan algoritma *Recurrent Neural Network* (RNN) dan beberapa *layer* lainnya yang akan dijelaskan pada bagian "Modeling".
+Membuat sistem rekomendasi dengan metode _content-based filtering_ dan _hybrid filtering_ dengan menghitung derajat kesamaan menggunakan *cosine similarity* berdasarkan deskripsi dari film dan model SVD (_Singular Value Decomposition_) untuk melihat relasi antara _users_ dan _items_.
 
 ## Data Understanding
 
-*Dataset* yang digunakan pada proyek *machine learning* ini adalah data "*Fake and real news dataset*" dari Kaggle. *Dataset* dapat diakses pada *link* berikut: [Link dataset](https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset).  
+*Dataset* yang digunakan pada proyek sistem rekomendasi ini adalah data "*The Movies Dataset*" dari Kaggle. *Dataset* dapat diakses pada *link* berikut: [Link dataset](https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset).  
 
-### Variabel-variabel pada *Fake and Real News* dataset adalah sebagai berikut:
+### Variabel-variabel pada *Metadata The Movies Dataset* dataset adalah sebagai berikut:
 
-- *title*: merupakan judul dari suatu berita yang ada.
-- *text*: merupakan *raw* teks dari suatu berita tertentu.
-- *subject*: adalah jenis golongan berita tersebut.
-- *date*: adalah tanggal terbit suatu berita.
+- *adult*: apakah film tergolong _X-Rated_/film dewasa atau tidak.
+- *belongs_to_collection*: informasi tentang serial film yang dimiliki film tersebut.
+- *budget*: adalah biaya produksi dalam USD.
+- *genres*: genre yang terkait pada film.
+- *homepage*: merupakan _official homepage_ dari film.
+- *id*: id film.
+- *imdb_id*: IMDB id film.
+- *original_language*: adalah bahasa asli film.
+- *original_title*: judul asli dari film.
+- *overview*: deskripsi atau sinopsis film.
+- *popularity*: popularitas skor dari IMDB.
+- *poster_path*: adalah URL dari poster film.
+- *production_companies*: perusahaan produsen film.
+- *production_countries*: negara produsen film.
+- *release_date*: tanggal rilis bioskop.
+- *revenue*: total pendapatan film dalam USD.
+- *runtime*: durasi film dalam menit.
+- *spoken_language*: bahasa yang digunakan dalam percakapan film.
+- *status*: status film (_released, to be released, announced, etc)_.
+- *tagline*: tagline dari film.
+- *title*: judul resmi film.
+- *video*: apakah ada tayangan video dalam film.
+- *vote_average*: rata-rata _rating_ dalam film.
+- *vote_count*: jumlah vote yang diberikan dari pengguna.
 
 Tahapan pemahaman *dataset* yang dilakukan diantaranya:
 
@@ -39,107 +59,118 @@ Tahapan pemahaman *dataset* yang dilakukan diantaranya:
 
     *Tabel 1. Dataframe Info*
 
-    | index | Column     | Non-Null Count  | Dtype   |
-    | ----- | ---------- | --------------- | ------- |
-    | 0     | title      | 44898 non-null  | object  |
-    | 1     | text       | 44898 non-null  | object  |
-    | 2     | subject    | 44898 non-null  | object  |
-    | 3     | date       | 44898 non-null  | object  |
-    | 4     | category   | 44898 non-null  | int64   |
+    | #   | Column                | Non-Null Count | Dtype   |
+    | --- | --------------------- | -------------- | ------- |
+    | 0   | adult                 | 45466 non-null | object  |
+    | 1   | belongs_to_collection | 4494 non-null  | object  |
+    | 2   | budget                | 45466 non-null | object  |
+    | 3   | genres                | 45466 non-null | object  |
+    | 4   | homepage              | 7782 non-null  | object  |
+    | 5   | id                    | 45466 non-null | object  |
+    | 6   | imdb_id               | 45449 non-null | object  |
+    | 7   | original_language     | 45455 non-null | object  |
+    | 8   | original_title        | 45466 non-null | object  |
+    | 9   | overview              | 44512 non-null | object  |
+    | 10  | popularity            | 45461 non-null | object  |
+    | 11  | poster_path           | 45080 non-null | object  |
+    | 12  | production_companies  | 45463 non-null | object  |
+    | 13  | production_countries  | 45463 non-null | object  |
+    | 14  | release_date          | 45379 non-null | object  |
+    | 15  | revenue               | 45460 non-null | float64 |
+    | 16  | runtime               | 45203 non-null | float64 |
+    | 17  | spoken_languages      | 45460 non-null | object  |
+    | 18  | status                | 45379 non-null | object  |
+    | 19  | tagline               | 20412 non-null | object  |
+    | 20  | title                 | 45460 non-null | object  |
+    | 21  | video                 | 45460 non-null | object  |
+    | 22  | vote_average          | 45460 non-null | float64 |
+    | 23  | vote_count            | 45460 non-null | float64 |
+
     
-    Pada Tabel 1, dapat dilihat bahwa *dataset* memiliki 5 kolom dan 44898 baris.
+    Pada Tabel 1, dapat dilihat bahwa *dataset* memiliki 24 kolom dan 45466 baris.
 
-3. Memvisualisasikan jumlah dari masing-masing subjek pada berita,
-   <img width="629" alt="subject_type_vis" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/cf0f4703-a6fc-4e27-92e8-5c2ba4be3d08">
+2. Menampilkan kata yang sering muncul pada judul film,
+   <img width="650" alt="wc_title" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/c0ddc7e4-dec3-4387-80cb-8faadc1747a8">
    
-   *Gambar 2. Grafik Persebaran Subjek Berita*
+   *Gambar 1. Word Cloud dari Judul Film*
 
-   Dari hasil *diagram plot*, dapat dilihat banyaknya data dari masing-masing *subject* berita. Subjek berita paling banyak adalah politik, dan paling sedikit adalah subjek *middle-east.* Sebagai catatan, dapat dilihat juga terdapat subjek dengan maksud yang sama, yaitu politik, yang memiliki dua batang *chart* berbeda. Hal ini dikarenakan, sebagian batang termasuk ke dalam berita *fake* dan satu lainnya termasuk ke dalam kategori *real*. 
+   Dari hasil *title word cloud visualization*, dapat dilihat kata yang sering menjadi judul film adalah '_Love_', diikuti dengan '_Man_' dan '_Girl_'. Dari sini dapat diasumsikan banyak film ber-_genre_ _romance_ pada _dataset_.
 
-4. Melihat kata yang sering muncul dengan *wordcloud*,
+3. Melihat kata yang sering muncul pada deskripsi film dengan *wordcloud*,
 
-   <img width="300" alt="word_cloud_vis" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/118fa305-56df-4cba-9e2f-f8b4244d8b3c">
+   <img width="650" alt="wc_overview" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/8fa19449-b149-408b-a387-88b7313f3436"> 
 
-   *Gambar 3. Word Cloud*
+   *Gambar 2. Word Cloud dari Deskripsi Film*
 
-   Kata yang sering muncul dalam *dictionary* adalah Donald Trump, US, White House, dan sebagainya.
+   Kata yang sering muncul dalam deskripsi adalah _life, find, love, family_ dan sebagainya.
 
-5. Melihat perbandingan data *Fake* dan data *Real* *News*,
+4. Melihat 10 negara produsen film terbanyak,
 
-   <img width="436" alt="target_dis" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/f0f282db-a6c6-4329-b228-a3ad70465018">
+   <img width="650" alt="top10_country" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/7483b297-b512-438e-922c-75859558051d">
 
-   *Gambar 4. Diagram Batang Label*
+   *Gambar 4. Diagram Batang 10 Negara Produsen Film Teratas*
 
-   Pada Gambar 4, jumlah data *fake* dan data *real* cukup seimbang, tidak terlalu jauh selisih banyaknya data.
+   Pada Gambar 4, USA menjadi negara produsen film terbanyak, diikuti oleh UK, dan France.
 
-6. Melakukan pengecekan terhadap *null values*.
+5. Melihat 10 studio produsen film terbanyak.
+   
+   <img width="650" alt="top10_studio" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/329e76fc-19ba-4c03-96e9-8b9b38af7c34">
 
-   Dataset tidak memiliki data yang *null*, sehingga bisa langsung dilanjutkan ke proses berikutnya.
+   *Gambar 5. Diagram Batang 10 Studio Produsen Film Teratas*
+
+   Pada Gambar 5, Canal+ menjadi studio dengan produksi film terbanyak, diikuti dengan Warner Bros.
 
 ## Data Preparation
 
 Proses pembersihan data dan preparasi yang dilakukan diantaranya sebagai berikut:
 
-- Menggabungkan kolom '*title*' dan '*text*' menjadi satu sebagai *features*.
-- *Drop* kolom '*title*', '*subject*', dan '*date*' karena tidak dibutuhkan dalam proses latih.
-- Menghilangkan *stopwords* Bahasa Inggris, karena *stopwords* tidak memiliki arti yang penting dalam kalimat. *Stopwords* dapat dihilangkan dan tidak akan berpengaruh terhadap model yang dibangun. Contoh *stopwords* Bahasa Inggris adalah *the, we, have*, dll.
-- Mengkonversi teks menjadi huruf kecil semua, supaya teks memiliki struktur yang seragam
-- Membersihkan teks dengan menggunakan *regular expression*:
-  - Menghilangkan teks url dengan substitusi.
-  - Menghilangkan karakter selain teks dengan substitusi.
-- Membagi data latih dan data training dengan test dengan train_test_split, dengan komposisi 70% sebagai latih, dan 30% sebagai uji.
+- Menggabungkan dataset metadata dengan dataset links yang berisi movie_id, imdb_id, dan tmdb_id.
+- Menambahkan kolom '_year_' pada dataframe.
+- Menghapus kolom dengan id [19730, 29503, 35587] karena memiliki format yang tidak sesuai.
+- Menghapus data duplikat berdasarkan kolom '_title_' dan '_overview_'.
+- Menggabungkan kolom '_tagline_' dan kolom '_overview_' menjadi kolom '_description_'.
 - *Tokenizing* *text*: Menandai setiap kata dengan angka dan memetakan data *text* pada *token* tersebut.
-- Membatasi setiap teks latih dengan maksimal 300 kata setiap data. Jika lebih akan dipotong, dan jika kurang akan ditambahkan padding.
 
 ## Modeling
 
-Proyek ini menggunakan model *deep learing* dengan *Recurrent Neural Network* (RNN) sebagai algoritmanya. RNN bekerja dengan cara mengolah input baru dan memprosesnya dengan berbagai informasi yang telah didapatkan sebelumnya. Informasi-informasi ini diingat di dalam memori internal milik RNN. Input baru akan diproses melalui sebuah *loop* yang mengandung beberapa informasi sebelumnya. Karena itulah, RNN tidak hanya mempertimbangkan input baru itu saja, namun juga melibatkan informasi yang telah didapatkan sebelumnya [1], [3].
+Proyek ini menggunakan metode _cosine similarity_ untuk menghitung derajat kesamaan dari dua entitas dalam vektor multidimensi (_dot product)_. Dalam konteks yang lebih umum, _cosine similarity_ digunakan untuk membandingkan dua objek atau entitas berdasarkan fitur atau atribut yang dimiliki oleh keduanya. Misalnya, terdapat dua vektor untuk mewakili dua film berdasarkan fitur seperti genre, popularitas, dan peringkat pengguna. 
 
-Pada model *deep learning* yang dibangun, terdapat beberapa layer, diantaranya:
+   Rumus _cosine similarity_ adalah sebagai berikut:
+      $$sim{(d1, d2)} = {\vec{V}(d1) \cdot \vec{V}(d2) \over (|\vec{V}(d1)| \cdot |\vec{V}(d2)|)}.$$
 
-- *Embedding layer*: dengan dimensi input sebanyak 10000, dan dimensi output sebanyak 128.
-- *Bidirectional layer* 1: menggunakan layer LSTM dengan parameter 'return_sequence' bernilai *True*. Artinya, pada layer ini, LSTM akan menghasilkan *output* pada setiap *timestamp*-nya. Hal ini digunakan karena kita perlu mengetahui urutan kata pada setiap data teks yang dianalisis.
-- *Bidirectional layer* 2: menggunakan layer LSTM dengan *weight* = 16. Parameter 'return_sequence' pada layer ini bernilai False, sehingga LSTM hanya akan mengembalikan output pada *timestamp* terakhir.
-- *Dense layer* 1: memiliki bobot bernilai 32 dengan fungsi aktivasi *Rectified Linear Unit* (ReLU). 
-- *Dropout layer*: untuk mencegah *overfitting*, memiliki nilai bobot 0,5.
-- *Dense layer* 2: bisa juga disebut dengan *output layer* atau *layer* terakhir, menggunakan fungsi aktivasi Sigmoid.
+   Dimana:
+   - `V~(d1)` mewakilkan vektor `d1`.
+   - `V~(d2)` mewakilkan vektor `d2`.
+   - `|V~(d1)|` adalah panjang vektor `d1`.
+   - `|V~(d2)|` adalah panjang vektor `d2`.
 
-Selain itu, model juga menggunakan *Adam Optimizer* dengan *learning rate* bernilai 0,01 dengan *binary_crossentopry loss function*.
+_Cosine similarity_ menghitung sudut antara dua vektor ini, diukur dalam derajat atau radian. Jika kedua vektor berada pada arah yang sama atau sangat dekat, maka _cosine similarity_ akan mendekati nilai 1, yang berarti kedua entitas sangat mirip satu sama lain. Sebaliknya, jika kedua vektor berada pada arah yang berlawanan atau hampir berlawanan, _cosine similarity_ akan mendekati nilai -1, yang berarti kedua entitas sangat berbeda satu sama lain. Jika kedua vektor tegak lurus, maka _cosine similarity_ akan menjadi 0, yang menunjukkan bahwa kedua entitas tidak memiliki kesamaan fitur [2].
 
-## Evaluation
+Selain itu, proyek ini juga menggunakan teknik _Singular Value Decomposition_ meminimalisir nilai RMSE (_Root Mean Square Error_). Singular Value Decomposition (SVD) adalah teknik yang digunakan untuk memecah suatu matriks menjadi tiga matriks yang lebih sederhana. Dengan cara ini, dapat mempermudah untuk memahami pola dan hubungan antara _users_ dan _items_ (film) [3].
 
-Metriks yang digunakan pada proyek ini adalah metriks *accuracy*. Metriks ini digunakan untuk mengukur performa model. Metrik ini mengukur sejauh mana model dapat mengklasifikasikan data dengan benar. Secara sederhana, *accuracy* menghitung persentase prediksi yang benar dari total jumlah data yang dievaluasi [2]. Rumus metriks *accuracy* adalah sebagai berikut:
-$$
-Accuracy = {TN + TP \over TN + FP + TP + FN}
-$$
-Sederhananya, metriks ini menghitung jumlah persentase prediksi benar dari seluruh hasil prediksi. Hasil metriks ini dari model yang dikembangkan adalah sebagai berikut: 
+## Evaluation & Result
 
-<img width="291" alt="model_acc" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/08618764-3129-4f11-b7bc-30def87a504d">
+Metriks yang digunakan pada proyek ini adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
 
-*Gambar 6. Grafik Akurasi Model*
+$$RMSE = {\sqrt{ \Sigma{(yᵢ - ȳ)^2 \over n}}}$$
 
-<img width="291" alt="model_loss" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/e3da8aaa-8d3e-4a79-bcd2-dc553e00ed68">
+Hasil metriks ini dari model yang dikembangkan adalah sebagai berikut: 
 
-*Gambar 7. Hasil Evaluasi Model*
+*Tabel 1. Dataframe Info*
+|                | Fold 1 | Fold 2 | Fold 3 | Fold 4 | Fold 5 | Mean   | Std   |
+|----------------|--------|--------|--------|--------|--------|--------|-------|
+| RMSE (testset) | 0.8988 | 0.9064 | 0.8931 | 0.8984 | 0.8944 | 0.8982 | 0.0047|
+| MAE (testset)  | 0.6926 | 0.6954 | 0.6893 | 0.6907 | 0.6871 | 0.6910 | 0.0028|
+| Fit time       | 1.14   | 1.15   | 1.16   | 1.69   | 1.81   | 1.39   | 0.30  |
+| Test time      | 0.14   | 0.12   | 0.13   | 0.22   | 0.38   | 0.20   | 0.10  |
 
-Model mendapatkan nilai akurasi sebesar 98,5% dengan loss model sebesar 7%.
+Model mendapat nilai rata-rata RMSE dari 5 Fold sebesar 0.8982.
 
-Ditampilkan juga hasil *confusion matrix* dari hasil prediksi sebagai berikut:
+### Content-Based Filtering
 
-<img width="236" alt="conf_matrix" src="https://github.com/revinarnan/sub-1-ml-terapan/assets/45119832/5f0ea859-47b3-4c15-922a-f7e5437f78f4">
+Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film ' '
 
-*Gambar 8. Hasil Confusion Matrix Model*
-
-Pemetaan tabel dari hasil *confusion matrix* pada gambar di atas.
-
-*Tabel 2. Pemetaan Confusion Matrix*
-
-|                | *Fake*                    | *Original*                |
-| -------------- | ------------------------- | ------------------------- |
-| ***Fake***     | ***True Negative (TN)***  | ***False Positive (FP)*** |
-| ***Original*** | ***False Negative (FN)*** | ***True Positive (TP)***  |
-
-Dari Gambar 8 *confusion matrix*, dapat  dilakukan analisis bahwa model dapat memprediksi 7124 *predicted label* 'Fake' dari 7177 *actual label* 'Fake'. Model juga dapat memprediksi sebanyak 6141 *predicted label* 'Original' dari 6293 *actual label* 'Original'. Selain itu, sebanyak 53 label diprediksi sebagai 'Original' yang seharusnya berlabel 'Fake', dan sebanyak 152 label diprediksi model sebagai 'Fake' yang seharusnya berlabel 'Original'.
+### Hybrid Filtering
 
 ## Kesimpulan
 
@@ -151,7 +182,15 @@ Untuk dapat memprediksi berita *hoax* di Indonesia, model perlu dilatih dengan m
 
 ## Daftar Pustaka
 
-[1] S. Kostadinov, “How recurrent neural networks work,” Medium, https://towardsdatascience.com/learn-how-recurrent-neural-networks-work-84e975feaaf7 (accessed Jun. 29, 2023). 
+[1] https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada
+
+[2] https://www.sciencedirect.com/science/article/abs/pii/B9780123814791000022
+
+[3] https://towardsdatascience.com/understanding-singular-value-decomposition-and-its-application-in-data-science-388a54be95d
+
+[4] https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e
+
+S. Kostadinov, “How recurrent neural networks work,” Medium, https://towardsdatascience.com/learn-how-recurrent-neural-networks-work-84e975feaaf7 (accessed Jun. 29, 2023). 
 
 [2] B. Harikrishnan N, "Confusion Matrix, Accuracy, Precision, Recall, F1 Score", Analytics Vidhya, https://medium.com/analytics-vidhya/confusion-matrix-accuracy-precision-recall-f1-score-ade299cf63cd (accessed Jun. 25, 2023).
 
