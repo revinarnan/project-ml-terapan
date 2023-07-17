@@ -148,24 +148,6 @@ _Cosine similarity_ menghitung sudut antara dua vektor ini, diukur dalam derajat
 
 Selain itu, proyek ini juga menggunakan teknik _Singular Value Decomposition_ meminimalisir nilai RMSE (_Root Mean Square Error_). Singular Value Decomposition (SVD) adalah teknik yang digunakan untuk memecah suatu matriks menjadi tiga matriks yang lebih sederhana. Dengan cara ini, dapat mempermudah untuk memahami pola dan hubungan antara _users_ dan _items_ (film) [3].
 
-## Evaluation & Result
-
-Metriks yang digunakan pada proyek ini adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
-
-$$RMSE = {\sqrt{ \Sigma{(yᵢ - ȳ)^2 \over n}}}$$
-
-Hasil metriks ini dari model yang dikembangkan adalah sebagai berikut: 
-
-*Tabel 1. Dataframe Info*
-|                | Fold 1 | Fold 2 | Fold 3 | Fold 4 | Fold 5 | Mean   | Std   |
-|----------------|--------|--------|--------|--------|--------|--------|-------|
-| RMSE (testset) | 0.8988 | 0.9064 | 0.8931 | 0.8984 | 0.8944 | 0.8982 | 0.0047|
-| MAE (testset)  | 0.6926 | 0.6954 | 0.6893 | 0.6907 | 0.6871 | 0.6910 | 0.0028|
-| Fit time       | 1.14   | 1.15   | 1.16   | 1.69   | 1.81   | 1.39   | 0.30  |
-| Test time      | 0.14   | 0.12   | 0.13   | 0.22   | 0.38   | 0.20   | 0.10  |
-
-Model mendapat nilai rata-rata RMSE dari 5 Fold sebesar 0.8982.
-
 ### Content-Based Filtering
 
 Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_ dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film 'Spectre', sistem rekomendasi _content-based filtering_ akan memberikan rekomendasi film selanjutnya seperti pada Gambar 6:
@@ -193,6 +175,25 @@ Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film y
    *Gambar 9. Rekomendasi Film berdasarkan Spectre dan User ID 404*
 
 Dari perbandingan hasil rekomendasi pada Gambar 8 dan Gambar 9, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
+
+
+## Evaluation & Result
+
+Metriks yang digunakan pada proyek ini adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
+
+$$RMSE = {\sqrt{ \Sigma{(yᵢ - ȳ)^2 \over n}}}$$
+
+Hasil metriks ini dari model yang dikembangkan adalah sebagai berikut: 
+
+*Tabel 1. Dataframe Info*
+|                | Fold 1 | Fold 2 | Fold 3 | Fold 4 | Fold 5 | Mean   | Std   |
+|----------------|--------|--------|--------|--------|--------|--------|-------|
+| RMSE (testset) | 0.8988 | 0.9064 | 0.8931 | 0.8984 | 0.8944 | 0.8982 | 0.0047|
+| MAE (testset)  | 0.6926 | 0.6954 | 0.6893 | 0.6907 | 0.6871 | 0.6910 | 0.0028|
+| Fit time       | 1.14   | 1.15   | 1.16   | 1.69   | 1.81   | 1.39   | 0.30  |
+| Test time      | 0.14   | 0.12   | 0.13   | 0.22   | 0.38   | 0.20   | 0.10  |
+
+Model mendapat nilai rata-rata RMSE dari 5 Fold sebesar 0.8982.
 
 ## Kesimpulan
 
