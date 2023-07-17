@@ -4,7 +4,7 @@
 
 Dalam era digital yang terus berkembang, industri hiburan seperti film dan televisi telah mengalami perubahan besar dalam cara konsumen menemukan dan mengakses konten. Platform streaming dan database film online telah menjadi sangat populer, menyediakan akses tak terbatas ke ribuan judul film dari berbagai genre dan tahun rilis. Namun, dengan banyaknya pilihan film yang tersedia, mencari tontonan yang sesuai dengan preferensi dan minat pengguna dapat menjadi tugas yang menantang.
 
-Inilah di mana sistem rekomendasi film berbasis machine learning menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film. [1]
+Inilah di mana sistem rekomendasi film berbasis machine learning menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film [1].
 
 Sebagai contoh, platform streaming terkemuka seperti Netflix, Amazon Prime Video, atau Disney+ menggunakan sistem rekomendasi untuk memberikan pengalaman pengguna yang disesuaikan dan meningkatkan retensi pelanggan. Sistem ini memanfaatkan teknologi machine learning dan algoritma yang kompleks untuk menganalisis data historis pengguna, seperti riwayat penontonannya, peringkat film yang telah ditonton, durasi menonton, dan interaksi dengan platform lainnya.
 
@@ -184,11 +184,11 @@ Sebagai contoh lain, penulis mencoba memberikan input film 'Avengers: Age of Ult
 
 Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_, dengan hasil prediksi _rating_ dari id pengguna menggunakan SVD, dan mengurutkannya berdasarkan estimasi _rating_ tertinggi. Dalam hal ini penulis mencoba memberikan input film berjudul 'Spectre' dan membandingkan hasil rekomendasi antara pengguna dengan ID '3000' dan ID '404'. Hasil sistem rekomendasi sebagai berikut:
 
-   <img width="650" alt="hf_3000" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/b6cb7802-5051-42d8-90db-d3a2c813f827">
+   <img width="650" alt="hf_3000" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/49b6a2af-fcb1-4324-b3c8-ae66bfae11fa">
 
    *Gambar 8. Rekomendasi Film berdasarkan Spectre dan User ID 3000*
 
-   <img width="650" alt="hf_404" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/23b5802e-49ac-4072-85e8-6558850d1b52">
+   <img width="650" alt="hf_404" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/94790ed0-79c3-4357-b9b1-1f3290ad070e">
 
    *Gambar 9. Rekomendasi Film berdasarkan Spectre dan User ID 404*
 
