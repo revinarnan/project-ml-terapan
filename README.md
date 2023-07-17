@@ -168,32 +168,46 @@ Model mendapat nilai rata-rata RMSE dari 5 Fold sebesar 0.8982.
 
 ### Content-Based Filtering
 
-Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_ dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film ' '
+Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_ dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film 'Spectre', sistem rekomendasi _content-based filtering_ akan memberikan rekomendasi film selanjutnya seperti pada Gambar 6:
+   
+   <img width="650" alt="cb_spectre" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/11a4d17f-2a64-422d-a5ce-135b8728fbf1">
+
+   *Gambar 6. Rekomendasi Film berdasarkan Film Spectre*
+
+Sebagai contoh lain, penulis mencoba memberikan input film 'Avengers: Age of Ultron', sistem akan merekomendasikan film yang dapat ditonton pengguna seperti pada Gambar 7:
+
+   <img width="650" alt="cb_avengers" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/b6cb7802-5051-42d8-90db-d3a2c813f827">
+
+   *Gambar 7. Rekomendasi Film berdasarkan Film Avengers: Age of Ultron*
 
 ### Hybrid Filtering
 
+Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_, dengan hasil prediksi _rating_ dari id pengguna menggunakan SVD, dan mengurutkannya berdasarkan estimasi _rating_ tertinggi. Dalam hal ini penulis mencoba memberikan input film berjudul 'Spectre' dan membandingkan hasil rekomendasi antara pengguna dengan ID '3000' dan ID '404'. Hasil sistem rekomendasi sebagai berikut:
+
+   <img width="650" alt="hf_3000" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/b6cb7802-5051-42d8-90db-d3a2c813f827">
+
+   *Gambar 8. Rekomendasi Film berdasarkan Spectre dan User ID 3000*
+
+   <img width="650" alt="hf_404" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/23b5802e-49ac-4072-85e8-6558850d1b52">
+
+   *Gambar 9. Rekomendasi Film berdasarkan Spectre dan User ID 404*
+
+Dari perbandingan hasil rekomendasi pada Gambar 8 dan Gambar 9, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
+
 ## Kesimpulan
 
-Model *machine learning* dapat dilatih untuk mengklasifikasikan berita palsu dan berita sesungguhnya. Dengan menggunakan teknik *deep learning*, model dapat memberikan akurasi sebesar 98,5%. Dalam kasus ini, hasil yang didapatkan cukup baik. Namun, model menggunakan *dataset* kumpulan berita dari sumber berbahasa Inggris, sehingga jika ingin digunakan dalam kasus klasifikasi berita dalam negeri, model perlu menggunakan *dataset* berita berbahasa Indonesia. Tentunya dengan beberapa penyesuaian pada tahap preparasi data.
+Model SVD mendapatkan skor rata-rata RMSE dari 5 Fold sebesar 0.8982. Nilai ini dapat dibilang cukup baik untuk model yang dikembangkan, karena masih belum menggunakan algoritma _deep learning_ dalam latihannya. Sistem dapat memberikan rekomendasi film yang dapat ditonton selanjutnya oleh pengguna. Metode _content-based filtering_ dapat memberikan rekomendasi film yang serupa dengan masukan film. Metode  _hybrid filtering_ dapat memberikan rekomendasi film berdasarkan kesamaan masukan film dan mengkombinasikan dengan riwayat pengguna sebelumnya.
 
 ## Saran
 
-Untuk dapat memprediksi berita *hoax* di Indonesia, model perlu dilatih dengan menggunakan *dataset* dengan Bahasa Indonesia.
+Untuk pengembangan selanjutnya dapat menggunakan metode _deep learning_ untuk mendapatkan skor akurasi RMSE yang lebih kecil, sehingga sistem dapat memberikan rekomendasi yang lebih tepat bagi pengguna.
 
 ## Daftar Pustaka
 
-[1] https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada
+[1] B. Rocca, “Introduction to Recommender Systems,” Medium, https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada (accessed Jul. 18, 2023). 
 
-[2] https://www.sciencedirect.com/science/article/abs/pii/B9780123814791000022
+[2] J. Han, M. Kamber, and J. Pei, “Getting to Know Your Data,” Data Mining (Third Edition), https://www.sciencedirect.com/science/article/abs/pii/B9780123814791000022 (accessed Jul. 18, 2023).
 
-[3] https://towardsdatascience.com/understanding-singular-value-decomposition-and-its-application-in-data-science-388a54be95d
+[3] R. Bagheri, “Understanding Singular Value Decomposition and Its Application in Data Science,” Medium, https://towardsdatascience.com/understanding-singular-value-decomposition-and-its-application-in-data-science-388a54be95d (accessed Jul. 18, 2023). 
 
-[4] https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e
-
-S. Kostadinov, “How recurrent neural networks work,” Medium, https://towardsdatascience.com/learn-how-recurrent-neural-networks-work-84e975feaaf7 (accessed Jun. 29, 2023). 
-
-[2] B. Harikrishnan N, "Confusion Matrix, Accuracy, Precision, Recall, F1 Score", Analytics Vidhya, https://medium.com/analytics-vidhya/confusion-matrix-accuracy-precision-recall-f1-score-ade299cf63cd (accessed Jun. 25, 2023).
-
-[3] A. P. Gema and D. Suhartono, “Recurrent neural network (RNN) Dan Gated Recurrent Unit (GRU),” Recurrent Neural Network (RNN) dan Gated Recurrent Unit (GRU), https://socs.binus.ac.id/2017/02/13/rnn-dan-gru/ (accessed Jun. 25, 2023). 
-
-[4] K. Shu, A. Sliva, S. Wang, J. Tang, and H. Liu, “Fake news detection on social media: A Data Mining Perspective: ACM SIGKDD Explorations Newsletter: Vol 19, no 1,” ACM SIGKDD Explorations Newsletter, https://dl.acm.org/doi/10.1145/3137597.3137600 (accessed Jun. 24, 2023). 
+[4] J. Moody, “What Does RMSE Really mean?,” Medium, https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e (accessed Jul. 18, 2023). 
