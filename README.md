@@ -131,7 +131,7 @@ Proses pembersihan data dan preparasi yang dilakukan diantaranya sebagai berikut
 - Menggabungkan kolom '_tagline_' dan kolom '_overview_' menjadi kolom '_description_'.
 - *Tokenizing* *text*: Menandai setiap kata dengan angka dan memetakan data *text* pada *token* tersebut.
 
-## Modeling
+## Modeling & Result
 
 Proyek ini menggunakan metode _cosine similarity_ untuk menghitung derajat kesamaan dari dua entitas dalam vektor multidimensi (_dot product)_. Dalam konteks yang lebih umum, _cosine similarity_ digunakan untuk membandingkan dua objek atau entitas berdasarkan fitur atau atribut yang dimiliki oleh keduanya. Misalnya, terdapat dua vektor untuk mewakili dua film berdasarkan fitur seperti genre, popularitas, dan peringkat pengguna. 
 
@@ -177,7 +177,7 @@ Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film y
 Dari perbandingan hasil rekomendasi pada Gambar 8 dan Gambar 9, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
 
 
-## Evaluation & Result
+## Evaluation
 
 Metriks yang digunakan pada proyek ini adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
 
