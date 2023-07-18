@@ -234,7 +234,7 @@ Dari perbandingan hasil rekomendasi pada Tabel 4 dan Tabel 5, dapat dilihat bahw
 
 Pada sistem rekomendasi dengan metode _content-based filtering_, digunakan metriks _precision_ sebagai evaluasi. Metriks ini menghitung jumlah rekomendasi yang relevan dibagi dengan jumlah total rekomendasi yang diberikan. Berikut merupakan rumus dari metriks _precision_:
 
-$$Precision = {n \ \text{relevan} \over \text{total} \ n\ \text{items rekomendasi}}$$
+$$Precision = {n \ \text{relevan} \over \text{total} \ n\ \text{items rekomendasi}} *\text{100\\%}$$
 
 Nilai metriks presisi dapat diambil contoh dari hasil top 10 rekomendasi film 'Spectre' dan 'Avengers: Age of Ultron'. Film Spectre memiliki genre '_Action, Adventure, Crime_'. Penulis memberi batasan minimal terdapat dua genre yang sama dari genre film masukan. Pada hasil rekomendasi, dapat dilihat terdapat 8 film yang memiliki genre yang serupa dengan genre film Spectre. Jika dimasukkan pada rumus menjadi:
 
