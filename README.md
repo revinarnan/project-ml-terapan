@@ -254,10 +254,10 @@ Untuk pengembangan selanjutnya dapat menggunakan metode _deep learning_ untuk me
 
 ## Daftar Pustaka
 
-[1] B. Rocca, “Introduction to Recommender Systems,” Medium, https://towardsdatascience.com/introduction-to-recommender-systems-6c66cf15ada (accessed Jul. 18, 2023). 
+[1] D. Roy and M. Dutta, “A systematic review and research perspective on Recommender Systems,” Journal of Big Data, vol. 9, no. 1, 2022. doi:10.1186/s40537-022-00592-5 
 
-[2] J. Han, M. Kamber, and J. Pei, “Getting to Know Your Data,” Data Mining (Third Edition), https://www.sciencedirect.com/science/article/abs/pii/B9780123814791000022 (accessed Jul. 18, 2023).
+[2] J. Han and M. Kamber, “2 - Getting to Know Your Data,” in Data Mining: Concepts and Techniques, Burlington, MA, US: Elsevier, 2012, pp. 39–82
 
-[3] R. Bagheri, “Understanding Singular Value Decomposition and Its Application in Data Science,” Medium, https://towardsdatascience.com/understanding-singular-value-decomposition-and-its-application-in-data-science-388a54be95d (accessed Jul. 18, 2023). 
+[3] S. L. Brunton and J. Nathan Kutz, “Singular value decomposition (SVD),” Data-Driven Science and Engineering, pp. 3–46, 2019. doi:10.1017/9781108380690.002 
 
-[4] J. Moody, “What Does RMSE Really mean?,” Medium, https://towardsdatascience.com/what-does-rmse-really-mean-806b65f2e48e (accessed Jul. 18, 2023). 
+[4] T. O. Hodson, “Root-mean-square error (RMSE) or mean absolute error (mae): When to use them or not,” Geoscientific Model Development, vol. 15, no. 14, pp. 5481–5487, 2022. doi:10.5194/gmd-15-5481-2022 
