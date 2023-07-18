@@ -128,6 +128,7 @@ Proses pembersihan data dan preparasi yang dilakukan diantaranya sebagai berikut
 - Menambahkan kolom '_year_' pada dataframe.
 - Menghapus kolom dengan id [19730, 29503, 35587] karena memiliki format yang tidak sesuai dengan _drop_.
 - Menghapus data duplikat berdasarkan kolom '_title_' dan '_overview_' dengan _drop_duplicate_.
+- Mengambil nilai dari 'name' pada kolom 'genres'.
 - Menggabungkan kolom '_tagline_' dan kolom '_overview_' menjadi kolom '_description_'.
 - *Tokenizing* *text*:
    - Menandai setiap kata dengan angka dan memetakan data *text* pada *token* tersebut.
@@ -159,35 +160,36 @@ Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki
 
    *Tabel 2. Hasil Top 10 Rekomendasi Film Berdasarkan Film Spectre*
 
-   |  title                    |  year  |  vote_count  |  vote_average  |  id    |
-   |---------------------------|--------|--------------|----------------|--------|
-   |  Skyfall                  |  2012  |  7718.0      |  6.9           |  37724 |
-   |  Casino Royale            |  2006  |  3930.0      |  7.3           |  36557 |
-   |  Quantum of Solace        |  2008  |  3015.0      |  6.1           |  10764 |
-   |  Watchmen                 |  2009  |  2892.0      |  7.0           |  13183 |
-   |  Die Another Day          |  2002  |  1112.0      |  5.8           |  36669 |
-   |  Dr. No                   |  1962  |  953.0       |  6.9           |  646   |
-   |  Safe Haven               |  2013  |  840.0       |  6.9           |  112949|
-   |  From Russia with Love    |  1963  |  773.0       |  6.9           |  657   |
-   |  Thunderball              |  1965  |  572.0       |  6.5           |  660   |
-   |  Diamonds Are Forever     |  1971  |  562.0       |  6.3           |  681   |
+   |   title                |   year  |   vote_count  |   vote_average  |   id    |   mov_genre                                 |
+   |------------------------|---------|---------------|-----------------|---------|---------------------------------------------|
+   |   Skyfall              |   2012  |   7718.0      |   6.9           |   37724 |   [Action, Adventure, Thriller]             |
+   |   Casino Royale        |   2006  |   3930.0      |   7.3           |   36557 |   [Adventure, Action, Thriller]             |
+   |   Quantum of Solace    |   2008  |   3015.0      |   6.1           |   10764 |   [Adventure, Action, Thriller, Crime]      |
+   |   Watchmen             |   2009  |   2892.0      |   7.0           |   13183 |   [Action, Mystery, Science Fiction]        |
+   |   Die Another Day      |   2002  |   1112.0      |   5.8           |   36669 |   [Adventure, Action, Thriller]             |
+   |   Dr. No               |   1962  |   953.0       |   6.9           |   646   |   [Adventure, Action, Thriller]             |
+   |   Safe Haven           |   2013  |   840.0       |   6.9           |   112949|   [Romance]                                 |
+   |   From Russia with Love|   1963  |   773.0       |   6.9           |   657   |   [Action, Thriller, Adventure]             |
+   |   Thunderball          |   1965  |   572.0       |   6.5           |   660   |   [Adventure, Action, Thriller]             |
+   |   Diamonds Are Forever |   1971  |   562.0       |   6.3           |   681   |   [Adventure, Action, Thriller]             |
 
 Sebagai contoh lain, penulis mencoba memberikan input film 'Avengers: Age of Ultron', sistem akan merekomendasikan film yang dapat ditonton pengguna seperti pada Tabel 3:
 
    *Tabel 3. Hasil Top 10 Rekomendasi Film Berdasarkan Film Avengers: Age of Ultron*
    
-   |  title                                   |  year  |  vote_count  |  vote_average  |  id    |
-   |------------------------------------------|--------|--------------|----------------|--------|
-   |  The Avengers                            |  2012  |  12000.0     |  7.4           |  24428 |
-   |  Iron Man                                |  2008  |  8951.0      |  7.4           |  1726  |
-   |  Iron Man 3                              |  2013  |  8951.0      |  6.8           |  68721 |
-   |  Captain America: Civil War              |  2016  |  7462.0      |  7.1           |  271110|
-   |  Iron Man 2                              |  2010  |  6969.0      |  6.6           |  10138 |
-   |  Kingsman: The Secret Service            |  2015  |  6069.0      |  7.6           |  207703|
-   |  Captain America: The Winter Soldier     |  2014  |  5881.0      |  7.6           |  100402|
-   |  Men in Black 3                          |  2012  |  4228.0      |  6.3           |  41154 |
-   |  Back to the Future Part II              |  1989  |  3926.0      |  7.4           |  165   |
-   |  Total Recall                            |  2012  |  2540.0      |  5.8           |  64635 |
+   |   title                                   |   year  |   vote_count  |   vote_average  |   id    |   mov_genre                                          |
+   |-------------------------------------------|---------|---------------|-----------------|---------|------------------------------------------------------|
+   |   The Avengers                            |   2012  |   12000.0     |   7.4           |   24428 |   [Science Fiction, Action, Adventure]               |
+   |   Iron Man                                |   2008  |   8951.0      |   7.4           |   1726  |   [Action, Science Fiction, Adventure]               |
+   |   Iron Man 3                              |   2013  |   8951.0      |   6.8           |   68721 |   [Action, Adventure, Science Fiction]               |
+   |   Captain America: Civil War              |   2016  |   7462.0      |   7.1           |   271110|   [Adventure, Action, Science Fiction]               |
+   |   Iron Man 2                              |   2010  |   6969.0      |   6.6           |   10138 |   [Adventure, Action, Science Fiction]               |
+   |   Kingsman: The Secret Service            |   2015  |   6069.0      |   7.6           |   207703|   [Crime, Comedy, Action, Adventure]                 |
+   |   Captain America: The Winter Soldier     |   2014  |   5881.0      |   7.6           |   100402|   [Action, Adventure, Science Fiction]               |
+   |   Men in Black 3                          |   2012  |   4228.0      |   6.3           |   41154 |   [Action, Comedy, Science Fiction]                  |
+   |   Back to the Future Part II              |   1989  |   3926.0      |   7.4           |   165   |   [Adventure, Comedy, Family, Science Fiction]       |
+   |   Total Recall                            |   2012  |   2540.0      |   5.8           |   64635 |   [Action, Science Fiction, Adventure, Thriller]     |
+
 
 ### Hybrid Filtering
 
@@ -195,46 +197,54 @@ Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film y
 
    *Tabel 4. Hasil Top 10 Rekomendasi Film berdasarkan Judul Spectre dan User ID 3000*
 
-   |  title                                  |  year  |  vote_count  |  vote_average  |  id    |  rating_est  |
-   |-----------------------------------------|--------|--------------|----------------|--------|--------------|
-   |  Skyfall                                |  2012  |  7718.0      |  6.9           |  37724 |  3.940755    |
-   |  Casino Royale                          |  2006  |  3930.0      |  7.3           |  36557 |  3.908062    |
-   |  On Her Majesty's Secret Service        |  1969  |  464.0       |  6.5           |  668   |  3.754892    |
-   |  Watchmen                               |  2009  |  2892.0      |  7.0           |  13183 |  3.738558    |
-   |  Dr. No                                 |  1962  |  953.0       |  6.9           |  646   |  3.688020    |
-   |  The Spy Who Loved Me                   |  1977  |  515.0       |  6.6           |  691   |  3.672488    |
-   |  The Tall Blond Man with One Black Shoe |  1972  |  58.0        |  6.9           |  12089 |  3.650862    |
-   |  From Russia with Love                  |  1963  |  773.0       |  6.9           |  657   |  3.626701    |
-   |  The Man with the Golden Gun            |  1974  |  533.0       |  6.4           |  682   |  3.621284    |
-   |  For Your Eyes Only                     |  1981  |  497.0       |  6.3           |  699   |  3.614222    |
+   |   title                                   |   year  |   vote_count  |   vote_average  |   id    |   mov_genre                                 |   rating_est  |
+   |-------------------------------------------|---------|---------------|-----------------|---------|---------------------------------------------|---------------|
+   |   Casino Royale                           |   2006  |   3930.0      |   7.3           |   36557 |   [Adventure, Action, Thriller]             |   3.926588    |
+   |   Skyfall                                 |   2012  |   7718.0      |   6.9           |   37724 |   [Action, Adventure, Thriller]             |   3.924010    |
+   |   The Spy Who Loved Me                    |   1977  |   515.0       |   6.6           |   691   |   [Adventure, Action, Thriller]             |   3.731661    |
+   |   On Her Majesty's Secret Service         |   1969  |   464.0       |   6.5           |   668   |   [Adventure, Action, Thriller]             |   3.725076    |
+   |   Watchmen                                |   2009  |   2892.0      |   7.0           |   13183 |   [Action, Mystery, Science Fiction]        |   3.704353    |
+   |   Dr. No                                  |   1962  |   953.0       |   6.9           |   646   |   [Adventure, Action, Thriller]             |   3.670961    |
+   |   The Man with the Golden Gun             |   1974  |   533.0       |   6.4           |   682   |   [Adventure, Action, Thriller]             |   3.663120    |
+   |   The Tall Blond Man with One Black Shoe  |   1972  |   58.0        |   6.9           |   12089 |   [Comedy, Mystery]                         |   3.657653    |
+   |   From Russia with Love                   |   1963  |   773.0       |   6.9           |   657   |   [Action, Thriller, Adventure]             |   3.638990    |
+   |   To Live and Die in L.A.                 |   1985  |   129.0       |   6.8           |   9846  |   [Action, Crime, Thriller]                 |   3.621542    |
+
 
    *Tabel 5. Hasil Top 10 Rekomendasi Film berdasarkan Judul Spectre dan User ID 404*
    
-   |  title                                  |  year  |  vote_count  |  vote_average  |  id    |  rating_est  |
-   |-----------------------------------------|--------|--------------|----------------|--------|--------------|
-   |  Skyfall                                |  2012  |  7718.0      |  6.9           |  37724 |  4.076838    |
-   |  On Her Majesty's Secret Service        |  1969  |  464.0       |  6.5           |  668   |  3.887904    |
-   |  Casino Royale                          |  2006  |  3930.0      |  7.3           |  36557 |  3.858841    |
-   |  Octopussy                              |  1983  |  534.0       |  6.2           |  700   |  3.757702    |
-   |  To Live and Die in L.A.                |  1985  |  129.0       |  6.8           |  9846  |  3.735794    |
-   |  The Man with the Golden Gun            |  1974  |  533.0       |  6.4           |  682   |  3.724506    |
-   |  From Russia with Love                  |  1963  |  773.0       |  6.9           |  657   |  3.705505    |
-   |  Watchmen                               |  2009  |  2892.0      |  7.0           |  13183 |  3.684376    |
-   |  The Interpreter                        |  2005  |  400.0       |  6.2           |  179   |  3.661334    |
-   |  For Your Eyes Only                     |  1981  |  497.0       |  6.3           |  699   |  3.660448    |
+   |   title                                    |   year  |   vote_count  |   vote_average  |   id    |   mov_genre                                 |   rating_est  |
+   |--------------------------------------------|---------|---------------|-----------------|---------|---------------------------------------------|---------------|
+   |   Casino Royale                            |   2006  |   3930.0      |   7.3           |   36557 |   [Adventure, Action, Thriller]             |   4.000000    |
+   |   Skyfall                                  |   2012  |   7718.0      |   6.9           |   37724 |   [Action, Adventure, Thriller]             |   3.838095    |
+   |   The Spy Who Loved Me                     |   1977  |   515.0       |   6.6           |   691   |   [Adventure, Action, Thriller]             |   3.715932    |
+   |   Watchmen                                 |   2009  |   2892.0      |   7.0           |   13183 |   [Action, Mystery, Science Fiction]        |   3.682757    |
+   |   Safe Haven                               |   2013  |   840.0       |   6.9           |   112949|   [Romance]                                 |   3.662248    |
+   |   The Tall Blond Man with One Black Shoe   |   1972  |   58.0        |   6.9           |   12089 |   [Comedy, Mystery]                         |   3.647671    |
+   |   On Her Majesty's Secret Service          |   1969  |   464.0       |   6.5           |   668   |   [Adventure, Action, Thriller]             |   3.633573    |
+   |   Thunderball                              |   1965  |   572.0       |   6.5           |   660   |   [Adventure, Action, Thriller]             |   3.628781    |
+   |   The Living Daylights                     |   1987  |   447.0       |   6.2           |   708   |   [Action, Adventure, Thriller]             |   3.610363    |
+   |   To Live and Die in L.A.                  |   1985  |   129.0       |   6.8           |   9846  |   [Action, Crime, Thriller]                 |   3.597934    |
+
 
 Dari perbandingan hasil rekomendasi pada Tabel 4 dan Tabel 5, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
 
 
 ## Evaluation
 
-Metriks yang digunakan pada proyek ini adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
+Pada sistem rekomendasi dengan metode _content-based filtering_, digunakan metriks _precision_ sebagai evaluasi. Metriks ini menghitung jumlah rekomendasi yang relevan dibagi dengan jumlah total rekomendasi yang diberikan. Berikut merupakan rumus dari metriks _precision_:
+
+$$Precision = {n \ \text{relevan} \over \text{total} \ n\ \text{items rekomendasi}}$$
+
+Nilai metriks presisi dapat diambil contoh dari hasil top 10 rekomendasi film 'Spectre' dan 'Avengers: Age of Ultron'. Film Spectre memiliki genre '_Action, Adventure, Crime_'. Penulis memberi batasan minimal terdapat dua genre yang sama dari genre film masukan. Pada hasil rekomendasi, dapat dilihat terdapat 8 film yang memiliki genre yang serupa dengan genre film Spectre, sehingga nilai presisinya sebesar 80%. Pada film 'Avengers: Age of Ultron', model memberikan 10 film yang relevan dengan genre dari film 'Avengers: Age of Ultron', sehingga nilai presisinya sebesar 100%. Jika diambil rata-rata, dapat dihitung nilai rata-rata presisinya sebesar 90%.
+
+Pada metode _hybrid filtering_, metriks yang digunakan adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
 
 $$RMSE = {\sqrt{ \Sigma{(yᵢ - ȳ)^2 \over n}}}$$
 
 Hasil metriks ini dari model yang dikembangkan adalah sebagai berikut: 
 
-*Tabel 1. Dataframe Info*
+*Tabel 6. Hasil Metriks RMSE*
 |                | Fold 1 | Fold 2 | Fold 3 | Fold 4 | Fold 5 | Mean   | Std   |
 |----------------|--------|--------|--------|--------|--------|--------|-------|
 | RMSE (testset) | 0.8988 | 0.9064 | 0.8931 | 0.8984 | 0.8944 | 0.8982 | 0.0047|
@@ -246,7 +256,7 @@ Model mendapat nilai rata-rata RMSE dari 5 Fold sebesar 0.8982.
 
 ## Kesimpulan
 
-Model SVD mendapatkan skor rata-rata RMSE dari 5 Fold sebesar 0.8982. Nilai ini dapat dibilang cukup baik untuk model yang dikembangkan, karena masih belum menggunakan algoritma _deep learning_ dalam latihannya. Sistem dapat memberikan rekomendasi film yang dapat ditonton selanjutnya oleh pengguna. Metode _content-based filtering_ dapat memberikan rekomendasi film yang serupa dengan masukan film. Metode  _hybrid filtering_ dapat memberikan rekomendasi film berdasarkan kesamaan masukan film dan mengkombinasikan dengan riwayat pengguna sebelumnya.
+Pada metode _content-based filtering_, model memiliki skor presisi rata-rata sebesar 90% dari 2 percobaan rekomendasi film. Pada metode _hybrid filtering_ dengan model SVD mendapatkan skor rata-rata RMSE dari 5 Fold sebesar 0.8982. Nilai ini dapat dibilang cukup baik untuk model yang dikembangkan, karena masih belum menggunakan algoritma _deep learning_ dalam latihannya. Sistem dapat memberikan rekomendasi film yang dapat ditonton selanjutnya oleh pengguna. Metode _content-based filtering_ dapat memberikan rekomendasi film yang serupa dengan masukan film. Metode  _hybrid filtering_ dapat memberikan rekomendasi film berdasarkan kesamaan masukan film dan mengkombinasikan dengan riwayat pengguna sebelumnya.
 
 ## Saran
 
