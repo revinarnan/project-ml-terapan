@@ -2,11 +2,11 @@
 
 ## Domain Proyek
 
-Dalam era digital yang terus berkembang, industri hiburan seperti film dan televisi telah mengalami perubahan besar dalam cara konsumen menemukan dan mengakses konten. Platform streaming dan database film online telah menjadi sangat populer, menyediakan akses tak terbatas ke ribuan judul film dari berbagai genre dan tahun rilis. Namun, dengan banyaknya pilihan film yang tersedia, mencari tontonan yang sesuai dengan preferensi dan minat pengguna dapat menjadi tugas yang menantang.
+Dalam era digital yang terus berkembang, industri hiburan seperti film dan televisi telah mengalami perubahan besar dalam cara konsumen menemukan dan mengakses konten. _Streaming platform_ dan _database_ film _online_ telah menjadi sangat populer, menyediakan akses tak terbatas ke ribuan judul film dari berbagai genre dan tahun rilis. Namun, dengan banyaknya pilihan film yang tersedia, mencari tontonan yang sesuai dengan preferensi dan minat pengguna dapat menjadi tugas yang menantang.
 
-Inilah di mana sistem rekomendasi film berbasis machine learning menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film [1].
+Inilah di mana sistem rekomendasi film berbasis _machine learning_ menjadi relevan dan berperan penting. Sistem rekomendasi film bertujuan untuk membantu pengguna menemukan film-film yang mungkin diminati berdasarkan preferensi sebelumnya dan perilaku menonton mereka. Hal ini menciptakan pengalaman yang lebih personal dan memungkinkan pengguna untuk menemukan film-film yang sesuai dengan selera mereka tanpa harus secara manual menjelajahi seluruh katalog film [1].
 
-Sebagai contoh, platform streaming terkemuka seperti Netflix, Amazon Prime Video, atau Disney+ menggunakan sistem rekomendasi untuk memberikan pengalaman pengguna yang disesuaikan dan meningkatkan retensi pelanggan. Sistem ini memanfaatkan teknologi machine learning dan algoritma yang kompleks untuk menganalisis data historis pengguna, seperti riwayat penontonannya, peringkat film yang telah ditonton, durasi menonton, dan interaksi dengan platform lainnya.
+Sebagai contoh, _streaming platform_ terkemuka seperti Netflix, Amazon Prime Video, atau Disney+ menggunakan sistem rekomendasi untuk memberikan pengalaman pengguna yang disesuaikan dan meningkatkan retensi pelanggan. Sistem ini memanfaatkan teknologi _machine learning_ dan algoritma yang kompleks untuk menganalisis data historis pengguna, seperti riwayat penontonannya, peringkat film yang telah ditonton, durasi menonton, dan interaksi dengan _platform_ lainnya.
 
 ## Business Understanding
 
@@ -126,10 +126,15 @@ Proses pembersihan data dan preparasi yang dilakukan diantaranya sebagai berikut
 
 - Menggabungkan dataset metadata dengan dataset links yang berisi movie_id, imdb_id, dan tmdb_id.
 - Menambahkan kolom '_year_' pada dataframe.
-- Menghapus kolom dengan id [19730, 29503, 35587] karena memiliki format yang tidak sesuai.
-- Menghapus data duplikat berdasarkan kolom '_title_' dan '_overview_'.
+- Menghapus kolom dengan id [19730, 29503, 35587] karena memiliki format yang tidak sesuai dengan _drop_.
+- Menghapus data duplikat berdasarkan kolom '_title_' dan '_overview_' dengan _drop_duplicate_.
 - Menggabungkan kolom '_tagline_' dan kolom '_overview_' menjadi kolom '_description_'.
-- *Tokenizing* *text*: Menandai setiap kata dengan angka dan memetakan data *text* pada *token* tersebut.
+- *Tokenizing* *text*:
+   - Menandai setiap kata dengan angka dan memetakan data *text* pada *token* tersebut.
+   - Menggunakan _analyzer_ 'word'.
+   - Parameter ngram_range bernilai (1, 2). Artinya tokenizing untuk setiap unigram dan bigram dalam corpus.
+   - `min_df = 0` artinya tidak ada minimal _terms_ dari _vocabulary_ dalam setiap _document_.
+   - `stop_words = 'english'` artinya menyaring kata yang termasuk dalam vocab english stop_words.
 
 ## Modeling & Result
 
@@ -150,31 +155,75 @@ Selain itu, proyek ini juga menggunakan teknik _Singular Value Decomposition_ me
 
 ### Content-Based Filtering
 
-Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_ dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film 'Spectre', sistem rekomendasi _content-based filtering_ akan memberikan rekomendasi film selanjutnya seperti pada Gambar 6:
+Pada metode _Content-Based Filtering_, penulis mencari Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_ dan mengurutkannya berdasarkan rata-rata nilai voting dari pengguna. Dalam hal ini penulis mencoba memberikan input judul film 'Spectre', sistem rekomendasi _content-based filtering_ akan memberikan rekomendasi film selanjutnya seperti pada Tabel 2:
+
+   *Tabel 2. Hasil Top 10 Rekomendasi Film Berdasarkan Film Spectre*
+
+   |  title                    |  year  |  vote_count  |  vote_average  |  id    |
+   |---------------------------|--------|--------------|----------------|--------|
+   |  Skyfall                  |  2012  |  7718.0      |  6.9           |  37724 |
+   |  Casino Royale            |  2006  |  3930.0      |  7.3           |  36557 |
+   |  Quantum of Solace        |  2008  |  3015.0      |  6.1           |  10764 |
+   |  Watchmen                 |  2009  |  2892.0      |  7.0           |  13183 |
+   |  Die Another Day          |  2002  |  1112.0      |  5.8           |  36669 |
+   |  Dr. No                   |  1962  |  953.0       |  6.9           |  646   |
+   |  Safe Haven               |  2013  |  840.0       |  6.9           |  112949|
+   |  From Russia with Love    |  1963  |  773.0       |  6.9           |  657   |
+   |  Thunderball              |  1965  |  572.0       |  6.5           |  660   |
+   |  Diamonds Are Forever     |  1971  |  562.0       |  6.3           |  681   |
+
+Sebagai contoh lain, penulis mencoba memberikan input film 'Avengers: Age of Ultron', sistem akan merekomendasikan film yang dapat ditonton pengguna seperti pada Tabel 3:
+
+   *Tabel 3. Hasil Top 10 Rekomendasi Film Berdasarkan Film Avengers: Age of Ultron*
    
-   <img width="650" alt="cb_spectre" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/11a4d17f-2a64-422d-a5ce-135b8728fbf1">
-
-   *Gambar 6. Rekomendasi Film berdasarkan Film Spectre*
-
-Sebagai contoh lain, penulis mencoba memberikan input film 'Avengers: Age of Ultron', sistem akan merekomendasikan film yang dapat ditonton pengguna seperti pada Gambar 7:
-
-   <img width="650" alt="cb_avengers" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/b6cb7802-5051-42d8-90db-d3a2c813f827">
-
-   *Gambar 7. Rekomendasi Film berdasarkan Film Avengers: Age of Ultron*
+   |  title                                   |  year  |  vote_count  |  vote_average  |  id    |
+   |------------------------------------------|--------|--------------|----------------|--------|
+   |  The Avengers                            |  2012  |  12000.0     |  7.4           |  24428 |
+   |  Iron Man                                |  2008  |  8951.0      |  7.4           |  1726  |
+   |  Iron Man 3                              |  2013  |  8951.0      |  6.8           |  68721 |
+   |  Captain America: Civil War              |  2016  |  7462.0      |  7.1           |  271110|
+   |  Iron Man 2                              |  2010  |  6969.0      |  6.6           |  10138 |
+   |  Kingsman: The Secret Service            |  2015  |  6069.0      |  7.6           |  207703|
+   |  Captain America: The Winter Soldier     |  2014  |  5881.0      |  7.6           |  100402|
+   |  Men in Black 3                          |  2012  |  4228.0      |  6.3           |  41154 |
+   |  Back to the Future Part II              |  1989  |  3926.0      |  7.4           |  165   |
+   |  Total Recall                            |  2012  |  2540.0      |  5.8           |  64635 |
 
 ### Hybrid Filtering
 
 Pada metode _Hybrid Filtering_, penulis mengkombinasikan pencarian Top 30 Film yang memiliki kesamaan paling dekat dengan judul film yang diberikan menggunakan _cosine similarity_, dengan hasil prediksi _rating_ dari id pengguna menggunakan SVD, dan mengurutkannya berdasarkan estimasi _rating_ tertinggi. Dalam hal ini penulis mencoba memberikan input film berjudul 'Spectre' dan membandingkan hasil rekomendasi antara pengguna dengan ID '3000' dan ID '404'. Hasil sistem rekomendasi sebagai berikut:
 
-   <img width="650" alt="hf_3000" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/49b6a2af-fcb1-4324-b3c8-ae66bfae11fa">
+   *Tabel 4. Hasil Top 10 Rekomendasi Film berdasarkan Judul Spectre dan User ID 3000*
 
-   *Gambar 8. Rekomendasi Film berdasarkan Spectre dan User ID 3000*
+   |  title                                  |  year  |  vote_count  |  vote_average  |  id    |  rating_est  |
+   |-----------------------------------------|--------|--------------|----------------|--------|--------------|
+   |  Skyfall                                |  2012  |  7718.0      |  6.9           |  37724 |  3.940755    |
+   |  Casino Royale                          |  2006  |  3930.0      |  7.3           |  36557 |  3.908062    |
+   |  On Her Majesty's Secret Service        |  1969  |  464.0       |  6.5           |  668   |  3.754892    |
+   |  Watchmen                               |  2009  |  2892.0      |  7.0           |  13183 |  3.738558    |
+   |  Dr. No                                 |  1962  |  953.0       |  6.9           |  646   |  3.688020    |
+   |  The Spy Who Loved Me                   |  1977  |  515.0       |  6.6           |  691   |  3.672488    |
+   |  The Tall Blond Man with One Black Shoe |  1972  |  58.0        |  6.9           |  12089 |  3.650862    |
+   |  From Russia with Love                  |  1963  |  773.0       |  6.9           |  657   |  3.626701    |
+   |  The Man with the Golden Gun            |  1974  |  533.0       |  6.4           |  682   |  3.621284    |
+   |  For Your Eyes Only                     |  1981  |  497.0       |  6.3           |  699   |  3.614222    |
 
-   <img width="650" alt="hf_404" src="https://github.com/revinarnan/project-ml-terapan/assets/45119832/94790ed0-79c3-4357-b9b1-1f3290ad070e">
+   *Tabel 5. Hasil Top 10 Rekomendasi Film berdasarkan Judul Spectre dan User ID 404*
+   
+   |  title                                  |  year  |  vote_count  |  vote_average  |  id    |  rating_est  |
+   |-----------------------------------------|--------|--------------|----------------|--------|--------------|
+   |  Skyfall                                |  2012  |  7718.0      |  6.9           |  37724 |  4.076838    |
+   |  On Her Majesty's Secret Service        |  1969  |  464.0       |  6.5           |  668   |  3.887904    |
+   |  Casino Royale                          |  2006  |  3930.0      |  7.3           |  36557 |  3.858841    |
+   |  Octopussy                              |  1983  |  534.0       |  6.2           |  700   |  3.757702    |
+   |  To Live and Die in L.A.                |  1985  |  129.0       |  6.8           |  9846  |  3.735794    |
+   |  The Man with the Golden Gun            |  1974  |  533.0       |  6.4           |  682   |  3.724506    |
+   |  From Russia with Love                  |  1963  |  773.0       |  6.9           |  657   |  3.705505    |
+   |  Watchmen                               |  2009  |  2892.0      |  7.0           |  13183 |  3.684376    |
+   |  The Interpreter                        |  2005  |  400.0       |  6.2           |  179   |  3.661334    |
+   |  For Your Eyes Only                     |  1981  |  497.0       |  6.3           |  699   |  3.660448    |
 
-   *Gambar 9. Rekomendasi Film berdasarkan Spectre dan User ID 404*
-
-Dari perbandingan hasil rekomendasi pada Gambar 8 dan Gambar 9, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
+Dari perbandingan hasil rekomendasi pada Tabel 4 dan Tabel 5, dapat dilihat bahwa sistem merekomendasikan film dan estimasi _rating_ yang berbeda untuk tiap pengguna. Hal ini karena riwayat film yang pernah ditonton pengguna berbeda, sehingga sistem akan merekomendasikan berdasarkan data riwayat pengguna tersebut.
 
 
 ## Evaluation
