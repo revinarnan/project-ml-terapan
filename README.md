@@ -236,7 +236,17 @@ Pada sistem rekomendasi dengan metode _content-based filtering_, digunakan metri
 
 $$Precision = {n \ \text{relevan} \over \text{total} \ n\ \text{items rekomendasi}}$$
 
-Nilai metriks presisi dapat diambil contoh dari hasil top 10 rekomendasi film 'Spectre' dan 'Avengers: Age of Ultron'. Film Spectre memiliki genre '_Action, Adventure, Crime_'. Penulis memberi batasan minimal terdapat dua genre yang sama dari genre film masukan. Pada hasil rekomendasi, dapat dilihat terdapat 8 film yang memiliki genre yang serupa dengan genre film Spectre, sehingga nilai presisinya sebesar 80%. Pada film 'Avengers: Age of Ultron', model memberikan 10 film yang relevan dengan genre dari film 'Avengers: Age of Ultron', sehingga nilai presisinya sebesar 100%. Jika diambil rata-rata, dapat dihitung nilai rata-rata presisinya sebesar 90%.
+Nilai metriks presisi dapat diambil contoh dari hasil top 10 rekomendasi film 'Spectre' dan 'Avengers: Age of Ultron'. Film Spectre memiliki genre '_Action, Adventure, Crime_'. Penulis memberi batasan minimal terdapat dua genre yang sama dari genre film masukan. Pada hasil rekomendasi, dapat dilihat terdapat 8 film yang memiliki genre yang serupa dengan genre film Spectre. Jika dimasukkan pada rumus menjadi:
+
+   $${8 \over 10} *\text{100\\%} = 80\\%$$
+
+Pada film 'Avengers: Age of Ultron', model memberikan 10 film yang relevan dengan genre dari film 'Avengers: Age of Ultron'. Jika dimasukkan pada rumus menjadi:
+
+   $${10 \over 10} *\text{100\\%} = 100\\%$$
+
+Jika diambil rata-rata, dapat dihitung nilai rata-rata presisinya:
+
+   $${(80 + 100) \over 2} *\text{100\\%} = 90\\%$$
 
 Pada metode _hybrid filtering_, metriks yang digunakan adalah metriks RMSE (_Root Mean Square Error_). Metriks ini digunakan untuk mengukur seberapa akurat model dalam memperkirakan nilai sebenarnya. RMSE menghitung perbedaan antara nilai yang diprediksi oleh model dan nilai yang sebenarnya. Artinya, untuk setiap data yang dimiliki, metrik ini akan menghitung selisih antara nilai prediksi dan nilai sebenarnya. Kemudian, akan mengambil rata-rata dari seluruh selisih tersebut dan menghitung akar kuadratnya. Semakin nilai RMSE mendekari 0, semakin baik pula model dalam memperkirakan nilai sebenarnya [4]. Berikut ini merupakan rumus dari metrik RMSE:
 
